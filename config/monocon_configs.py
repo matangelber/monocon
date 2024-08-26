@@ -1,12 +1,12 @@
 from yacs.config import CfgNode as CN
-
+from datetime import datetime
 
 _C = CN()
 
 _C.VERSION = 'v1.0.3'
 _C.DESCRIPTION = "MonoCon Default Configuration"
 
-_C.OUTPUT_DIR = ""                               # Output Directory
+_C.OUTPUT_DIR = "./outputs/" + datetime.now().strftime("%Y_%d_%h_%H_%M") + '/'                        # Output Directory
 _C.SEED = -1                                     # -1: Random Seed Selection
 _C.GPU_ID = 0                                    # Index of GPU to use
 
@@ -15,7 +15,7 @@ _C.USE_BENCHMARK = True                          # Value of 'torch.backends.cudn
 
 # Data
 _C.DATA = CN()
-_C.DATA.ROOT = r'/home/user/SSD/KITTI'                  # KITTI Root
+_C.DATA.ROOT = r'/home/matan/Projects/monocon-pytorch/data/KITTI'                  # KITTI Root
 _C.DATA.BATCH_SIZE = 8
 _C.DATA.NUM_WORKERS = 4
 _C.DATA.TRAIN_SPLIT = 'train'
@@ -27,6 +27,7 @@ _C.DATA.FILTER.MIN_DEPTH = 2
 _C.DATA.FILTER.MAX_DEPTH = 65
 _C.DATA.FILTER.MAX_TRUNCATION = 0.5
 _C.DATA.FILTER.MAX_OCCLUSION = 2
+_C.DATA.FILTER.CLASSES = ['car']
 
 
 # Model
@@ -37,7 +38,7 @@ _C.MODEL.BACKBONE.NUM_LAYERS = 34
 _C.MODEL.BACKBONE.IMAGENET_PRETRAINED = True
 
 _C.MODEL.HEAD = CN()
-_C.MODEL.HEAD.NUM_CLASSES = 3
+_C.MODEL.HEAD.NUM_CLASSES = 1
 _C.MODEL.HEAD.MAX_OBJS = 30
 
 

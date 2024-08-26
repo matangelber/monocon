@@ -17,6 +17,7 @@ DEFAULT_FILTER_CONFIG = {
     'max_depth': 65,
     'max_truncation': 0.5,
     'max_occlusion': 2,
+    'classes': ['car', 'pedestrian', 'cyclist']
 }
 
 
@@ -47,6 +48,7 @@ class MonoConDataset(BaseKITTIMono3DDataset):
                  base_root: str, 
                  split: str,
                  max_objs: int = 30,
+                 labels_subset = None,
                  transforms: List[BaseTransform] = None,
                  filter_configs: Dict[str, Any] = None,
                  **kwargs):
@@ -92,8 +94,11 @@ class MonoConDataset(BaseKITTIMono3DDataset):
             # Base Properties
             occ = raw_label.occlusion
             trunc = raw_label.truncation
+
             
             if (occ > self.max_occlusion) or (trunc > self.max_truncation):
+                continue
+            if raw_label.cls_str.lower() not in self.classes:
                 continue
             
             
