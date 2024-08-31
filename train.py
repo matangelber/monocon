@@ -5,6 +5,7 @@ import torch
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 from engine.monocon_engine import MonoconEngine
 from utils.engine_utils import tprint, get_default_cfg, set_random_seed, generate_random_seed
+from config.config_dev_01 import _C as cfg
 
 
 
@@ -16,7 +17,8 @@ if torch_version >= 7:
 
 
 # Get Config from 'config/monocon_configs.py'
-cfg = get_default_cfg()
+# cfg = get_default_cfg()
+cfg = cfg.clone()
 
 
 # Set Benchmark

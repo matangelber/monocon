@@ -27,6 +27,8 @@ _C.DATA.FILTER.MIN_DEPTH = 2
 _C.DATA.FILTER.MAX_DEPTH = 65
 _C.DATA.FILTER.MAX_TRUNCATION = 0.5
 _C.DATA.FILTER.MAX_OCCLUSION = 2
+_C.DATA.FILTER.CLASSES = ['car']
+
 
 # Model
 _C.MODEL = CN()
@@ -46,7 +48,7 @@ _C.SOLVER = CN()
 _C.SOLVER.OPTIM = CN()
 _C.SOLVER.OPTIM.LR = 2.25E-04
 _C.SOLVER.OPTIM.WEIGHT_DECAY = 1E-05
-_C.SOLVER.OPTIM.NUM_EPOCHS = 200        # Max Training Epochs
+_C.SOLVER.OPTIM.NUM_EPOCHS = 200       # Max Training Epochs
 
 _C.SOLVER.SCHEDULER = CN()
 _C.SOLVER.SCHEDULER.ENABLE = True
@@ -59,6 +61,6 @@ _C.SOLVER.CLIP_GRAD.MAX_NORM = 35
 
 # Period
 _C.PERIOD = CN()
-_C.PERIOD.EVAL_PERIOD = 10                      # In Epochs / Set -1 if you don't want validation
+_C.PERIOD.EVAL_PERIOD = 10                  # In Epochs / Set -1 if you don't want validation
 _C.PERIOD.LOG_PERIOD = 50                       # In Steps
 

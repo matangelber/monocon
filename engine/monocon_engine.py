@@ -82,11 +82,11 @@ class MonoconEngine(BaseEngine):
             # Forward
             data_dict = move_data_device(data_dict, self.current_device)
             _, loss_dict = self.model(data_dict)
-            total_loss = reduce_loss_dict(loss_dict)
-            total_loss.backward()
+            recent_loss = reduce_loss_dict(loss_dict)
+            recent_loss.backward()
             
             # Save Losses
-            step_loss = total_loss.detach().item()
+            step_loss = recent_loss.detach().item()
             epoch_losses.append(step_loss)
             self.entire_losses.append(step_loss)
             
@@ -105,8 +105,8 @@ class MonoconEngine(BaseEngine):
             if (self.global_iters % self.log_period == 0):
                 one_epoch_steps = len(self.train_loader)
                 prog_bar = progress_to_string_bar((batch_idx + 1), one_epoch_steps, bins=20)
-                recent_loss = sum(self.entire_losses[-100:]) / len(self.entire_losses[-100:])
-                print(f"| Progress {prog_bar} | LR {self.current_lr:.6f} | Loss {total_loss.item():8.4f} ({recent_loss:8.4f}) |")
+                total_loss = sum(self.entire_losses[-100:]) / len(self.entire_losses[-100:])
+                print(f"| Progress {prog_bar} | LR {self.current_lr:.6f} | Loss {recent_loss.item():8.4f} ({total_loss:8.4f}) |")
                 
                 self._update_dict_to_writer(loss_dict, tag='loss')
                 
