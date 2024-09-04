@@ -17,7 +17,7 @@ DEFAULT_FILTER_CONFIG = {
     'max_depth': 65,
     'max_truncation': 0.5,
     'max_occlusion': 2,
-    'classes': ['car', 'pedestrian', 'cyclist']
+    'classes': ['pedestrian', 'cyclist', 'car']
 }
 
 
@@ -48,7 +48,6 @@ class MonoConDataset(BaseKITTIMono3DDataset):
                  base_root: str, 
                  split: str,
                  max_objs: int = 30,
-                 labels_subset = None,
                  transforms: List[BaseTransform] = None,
                  filter_configs: Dict[str, Any] = None,
                  **kwargs):
@@ -74,7 +73,12 @@ class MonoConDataset(BaseKITTIMono3DDataset):
         for k, v in filter_configs.items():
             setattr(self, k, v)
         self.filter_configs = filter_configs
-        
+        new_list_indices = {label: idx for idx, label in enumerate(filter_configs['classes'])}
+        self.default_to_new_mapping = {i: (new_list_indices[label] if label in new_list_indices else -1)
+                                  for i, label in enumerate(DEFAULT_FILTER_CONFIG['classes'])}
+        pass
+
+
     def __getitem__(self, idx: int) -> Dict[str, Any]:
         
         image, img_metas = self.load_image(idx)
@@ -105,7 +109,7 @@ class MonoConDataset(BaseKITTIMono3DDataset):
             # 2D Box Properties
             gt_bbox = raw_label.box2d
             bbox_height = (gt_bbox[3] - gt_bbox[1])
-            gt_label = raw_label.cls_num
+            gt_label = self.default_to_new_mapping[raw_label.cls_num]
             
             if bbox_height < self.min_height:
                 continue

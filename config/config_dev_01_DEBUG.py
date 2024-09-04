@@ -39,8 +39,7 @@ _C.MODEL.BACKBONE.IMAGENET_PRETRAINED = True
 
 _C.MODEL.HEAD = CN()
 _C.MODEL.HEAD.NUM_CLASSES = 1
-_C.MODEL.HEAD.MAX_OBJS = 30
-
+_C.MODEL.HEAD.MAX_PER_IMG = 30
 
 # Optimization
 _C.SOLVER = CN()
@@ -61,6 +60,6 @@ _C.SOLVER.CLIP_GRAD.MAX_NORM = 35
 
 # Period
 _C.PERIOD = CN()
-_C.PERIOD.EVAL_PERIOD = 10                  # In Epochs / Set -1 if you don't want validation
+_C.PERIOD.EVAL_PERIOD = 1                 # In Epochs / Set -1 if you don't want validation
 _C.PERIOD.LOG_PERIOD = 50                       # In Steps
 

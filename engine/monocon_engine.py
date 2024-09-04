@@ -28,7 +28,8 @@ class MonoconEngine(BaseEngine):
     def build_model(self):
         detector = MonoConDetector(
             num_dla_layers=self.cfg.MODEL.BACKBONE.NUM_LAYERS,
-            pretrained_backbone=self.cfg.MODEL.BACKBONE.IMAGENET_PRETRAINED)
+            pretrained_backbone=self.cfg.MODEL.BACKBONE.IMAGENET_PRETRAINED,
+            head_config=self.cfg.MODEL.HEAD)
         return detector.to(self.current_device)
     
     

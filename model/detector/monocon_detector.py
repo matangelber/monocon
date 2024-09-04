@@ -36,9 +36,15 @@ class MonoConDetector(nn.Module):
         
         self.backbone = DLA(num_dla_layers, pretrained=pretrained_backbone)
         self.neck = DLAUp(self.backbone.get_out_channels(start_level=2), start_level=2)
-        
-        if head_config is None:
-            head_config = default_head_config
+
+        if head_config is not None:
+            head_config = {key.lower(): head_config[key] for key in head_config.keys()}
+        else:
+            head_config = dict()
+        for key in default_head_config.keys():
+            if key not in head_config.keys():
+                head_config[key] = default_head_config[key]
+
         if test_config is None:
             test_config = default_test_config
             

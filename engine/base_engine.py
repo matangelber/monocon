@@ -113,10 +113,10 @@ class BaseEngine:
             print(f" Epoch {self.epochs:3d} / {self.target_epochs:3d} ".center(90, "="))
             
             avg_loss, elapsed_time = self.train_one_epoch()
-            
+
             self.epoch_times.append(elapsed_time)
             time_info = self._get_time_info()
-            
+
             print(f"\n- Average Loss: {avg_loss:.3f}")
             print(f"- Epoch Time: {time_info['epoch_time']}")
             print(f"- Remain Time: {time_info['remain_time']}")
